@@ -330,9 +330,6 @@
                 return { error: 'Clarity ' + clarity + ' not found' };
             }
             
-            if (clarity === 'FL') {
-                tableValue = Math.round(tableValue * 1.1);
-            }
             
             const basePrice = tableValue * 100 * carat;
             const discountDecimal = Math.abs(discount) / 100;
