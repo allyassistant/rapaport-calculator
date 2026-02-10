@@ -1819,7 +1819,7 @@
         window.addEventListener('beforeunload', savePreferences);
         
         // 載入時還原偏好
-        loadPreferences();
+        localStorage.removeItem("missionControlPrefs"); loadPreferences();
         
         // 定期自動儲存（每 30 秒）
         setInterval(savePreferences, 30000);
