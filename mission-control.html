@@ -1052,6 +1052,8 @@
         };
         
         let currentTab = 'dashboard';
+        let lastRealStatus = null;
+        let usingRealData = false;
         
         function switchTab(tab, event) {
             currentTab = tab;
@@ -1827,8 +1829,6 @@
         // ===== 實時系統狀態監控 =====
         const STATUS_API_URL = 'http://localhost:3456/api/status';
         const STATUS_REFRESH_INTERVAL = 30000; // 30秒
-        let lastRealStatus = null;
-        let usingRealData = false;
         
         // 獲取真實系統狀態
         async function fetchRealSystemStatus() {
