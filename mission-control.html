@@ -1763,8 +1763,13 @@
         
         // 頁面載入時自動刷新
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded triggered');
+            
             // 顯示刷新指示器
             showRefreshIndicator();
+            
+            // 先渲染一次（確保有內容顯示）
+            render();
             
             // 執行自動刷新
             setTimeout(() => {
