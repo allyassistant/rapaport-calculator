@@ -1786,6 +1786,9 @@
                 const statusText = usingRealData ? '✅ 已連接真實系統' : '✅ 數據已更新 (Demo Mode)';
                 showToast(statusText);
             }).catch(() => {
+                // 即使失敗都要渲染頁面
+                render();
+                savePreferences();
                 hideRefreshIndicator();
                 showToast('⚠️ 使用離線模式');
             });
