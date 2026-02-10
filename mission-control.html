@@ -1821,9 +1821,6 @@
         // 載入時還原偏好
         loadPreferences();
         
-        // 確保渲染正確嘅 tab
-        render();
-        
         // 定期自動儲存（每 30 秒）
         setInterval(savePreferences, 30000);
         
