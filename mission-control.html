@@ -1937,10 +1937,7 @@
         startRealTimeStatus();
         
         // 開 App 自動刷新（顯示中性灰白 Toast）
-        document.addEventListener('DOMContentLoaded', () => {
-            // 先渲染一次確保有內容顯示
-            render();
-            
+        (function autoRefreshOnLoad() {
             // 顯示刷新指示器
             const indicator = document.createElement('div');
             indicator.id = 'refresh-indicator';
@@ -1982,8 +1979,7 @@
                     showToast('⚠️ 使用離線模式');
                 });
             }, 500);
-        });
+        })();
     </script>
 </body>
 </html>
-// Cache bust 1770741459
