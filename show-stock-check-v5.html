@@ -699,6 +699,232 @@
             border-radius: 50%;
             animation: spin 0.6s linear infinite;
         }
+        
+        /* ===== 系統狀態面板 ===== */
+        .system-status-panel {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            width: 280px;
+            border-radius: 16px;
+            z-index: 100;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 48px;
+        }
+        
+        .system-status-panel.expanded {
+            max-height: 320px;
+        }
+        
+        .status-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.4);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: background 0.2s;
+        }
+        
+        .status-panel-header:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+        
+        .status-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gray-400);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .status-dot::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .status-dot.online {
+            background: var(--green);
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+        
+        .status-dot.online::after {
+            border-color: rgba(16, 185, 129, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .status-dot.degraded {
+            background: var(--yellow);
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+        }
+        
+        .status-dot.offline {
+            background: var(--red);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+        
+        .status-toggle {
+            font-size: 12px;
+            color: var(--gray-500);
+            transition: transform 0.3s;
+        }
+        
+        .system-status-panel.expanded .status-toggle {
+            transform: rotate(180deg);
+        }
+        
+        .status-grid {
+            padding: 12px;
+            display: grid;
+            gap: 8px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.4);
+            transition: all 0.2s;
+        }
+        
+        .status-item:hover {
+            background: rgba(255, 255, 255, 0.7);
+        }
+        
+        .status-item.online {
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .status-item.degraded {
+            background: rgba(245, 158, 11, 0.1);
+        }
+        
+        .status-item.offline {
+            background: rgba(239, 68, 68, 0.08);
+        }
+        
+        .status-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        
+        .status-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .status-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 2px;
+        }
+        
+        .status-detail {
+            font-size: 12px;
+            color: var(--gray-500);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .status-badge-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            flex-shrink: 0;
+        }
+        
+        .status-badge-indicator.online {
+            background: var(--green);
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+        }
+        
+        .status-badge-indicator.degraded {
+            background: var(--yellow);
+            box-shadow: 0 0 6px rgba(245, 158, 11, 0.6);
+        }
+        
+        .status-badge-indicator.offline {
+            background: var(--red);
+        }
+        
+        .status-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            font-size: 11px;
+            color: var(--gray-500);
+            background: rgba(0, 0, 0, 0.02);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .refresh-status-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .refresh-status-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: rotate(180deg);
+        }
+        
+        .refresh-status-btn.spinning {
+            animation: spin 1s linear infinite;
+        }
+        
+        /* 響應式調整 */
+        @media (max-width: 640px) {
+            .system-status-panel {
+                left: 16px;
+                right: 16px;
+                width: auto;
+                top: 50px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -709,6 +935,55 @@
     
     <!-- Toast 容器 -->
     <div class="toast-container" id="toastContainer"></div>
+    
+    <!-- ===== 系統狀態面板 (Liquid Glass) ===== -->
+    <div id="systemStatusPanel" class="system-status-panel glass-card">
+        <div class="status-panel-header" onclick="toggleStatusPanel()">
+            <div class="status-title">
+                <span class="status-dot" id="overallStatusDot"></span>
+                <span>系統狀態</span>
+            </div>
+            <span class="status-toggle">▼</span>
+        </div>
+        <div class="status-grid" id="statusGrid">
+            <div class="status-item" data-service="openclaw">
+                <div class="status-icon">🤖</div>
+                <div class="status-info">
+                    <div class="status-name">OpenClaw</div>
+                    <div class="status-detail" id="openclawStatus">檢查中...</div>
+                </div>
+                <div class="status-badge-indicator" id="openclawBadge"></div>
+            </div>
+            <div class="status-item" data-service="whatsapp">
+                <div class="status-icon">💬</div>
+                <div class="status-info">
+                    <div class="status-name">WhatsApp</div>
+                    <div class="status-detail" id="whatsappStatus">檢查中...</div>
+                </div>
+                <div class="status-badge-indicator" id="whatsappBadge"></div>
+            </div>
+            <div class="status-item" data-service="kimi">
+                <div class="status-icon">🧠</div>
+                <div class="status-info">
+                    <div class="status-name">Kimi AI</div>
+                    <div class="status-detail" id="kimiStatus">檢查中...</div>
+                </div>
+                <div class="status-badge-indicator" id="kimiBadge"></div>
+            </div>
+            <div class="status-item" data-service="qwen3">
+                <div class="status-icon">⚡</div>
+                <div class="status-info">
+                    <div class="status-name">Qwen3</div>
+                    <div class="status-detail" id="qwen3Status">檢查中...</div>
+                </div>
+                <div class="status-badge-indicator" id="qwen3Badge"></div>
+            </div>
+        </div>
+        <div class="status-footer">
+            <span id="lastStatusCheck">更新中...</span>
+            <button class="refresh-status-btn" onclick="manualRefreshStatus()">🔄</button>
+        </div>
+    </div>
     
     <!-- 載入覆蓋層 -->
     <div class="loading-overlay" id="loadingOverlay">
@@ -1348,6 +1623,164 @@
                 duration: 3000
             });
         }
+        
+        // ===== 系統狀態監控 =====
+        const STATUS_API_URL = 'http://localhost:3456/api/status';
+        const STATUS_REFRESH_INTERVAL = 30000; // 30秒
+        let statusRefreshTimer = null;
+        let lastStatusData = null;
+        
+        // 狀態配置
+        const statusConfig = {
+            openclaw: { icon: '🤖', name: 'OpenClaw' },
+            whatsapp: { icon: '💬', name: 'WhatsApp' },
+            kimi: { icon: '🧠', name: 'Kimi AI' },
+            qwen3: { icon: '⚡', name: 'Qwen3' }
+        };
+        
+        // 獲取系統狀態
+        async function fetchSystemStatus() {
+            try {
+                const response = await fetch(STATUS_API_URL, {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' },
+                    // 5秒超時
+                    signal: AbortSignal.timeout ? AbortSignal.timeout(5000) : undefined
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                lastStatusData = data;
+                updateStatusUI(data.services);
+                return data;
+            } catch (error) {
+                console.error('Status fetch failed:', error);
+                // 如果連不上狀態服務，顯示模擬狀態
+                showSimulatedStatus();
+                return null;
+            }
+        }
+        
+        // 更新狀態 UI
+        function updateStatusUI(services) {
+            let onlineCount = 0;
+            let offlineCount = 0;
+            
+            Object.entries(services).forEach(([key, data]) => {
+                const statusEl = document.getElementById(`${key}Status`);
+                const badgeEl = document.getElementById(`${key}Badge`);
+                const itemEl = document.querySelector(`[data-service="${key}"]`);
+                
+                if (statusEl && badgeEl && itemEl) {
+                    // 更新詳情文字
+                    let detailText = data.message || data.status;
+                    if (data.latency) {
+                        detailText += ` · ${data.latency}ms`;
+                    }
+                    statusEl.textContent = detailText;
+                    
+                    // 更新徽章
+                    badgeEl.className = 'status-badge-indicator ' + data.status;
+                    
+                    // 更新項目背景
+                    itemEl.className = 'status-item ' + data.status;
+                    
+                    // 統計
+                    if (data.status === 'online') onlineCount++;
+                    else if (data.status === 'offline') offlineCount++;
+                }
+            });
+            
+            // 更新總體狀態
+            const overallDot = document.getElementById('overallStatusDot');
+            if (overallDot) {
+                if (onlineCount === 4) {
+                    overallDot.className = 'status-dot online';
+                } else if (offlineCount > 0) {
+                    overallDot.className = 'status-dot offline';
+                } else {
+                    overallDot.className = 'status-dot degraded';
+                }
+            }
+            
+            // 更新最後檢查時間
+            const lastCheckEl = document.getElementById('lastStatusCheck');
+            if (lastCheckEl && services.openclaw?.lastCheck) {
+                const date = new Date(services.openclaw.lastCheck);
+                lastCheckEl.textContent = `更新於 ${date.toLocaleTimeString('zh-HK', { hour: '2-digit', minute: '2-digit' })}`;
+            }
+        }
+        
+        // 顯示模擬狀態（當狀態服務不可用时）
+        function showSimulatedStatus() {
+            const simulatedData = {
+                openclaw: { status: 'online', message: 'Running (Demo)' },
+                whatsapp: { status: 'online', message: 'Connected (Demo)' },
+                kimi: { status: 'online', message: 'API Ready (Demo)' },
+                qwen3: { status: 'degraded', message: 'Local Mode (Demo)' }
+            };
+            updateStatusUI(simulatedData);
+            
+            document.getElementById('lastStatusCheck').textContent = 'Demo Mode';
+        }
+        
+        // 切換狀態面板
+        function toggleStatusPanel() {
+            const panel = document.getElementById('systemStatusPanel');
+            panel.classList.toggle('expanded');
+        }
+        
+        // 手動刷新狀態
+        async function manualRefreshStatus() {
+            const btn = document.querySelector('.refresh-status-btn');
+            btn.classList.add('spinning');
+            
+            await fetchSystemStatus();
+            
+            setTimeout(() => {
+                btn.classList.remove('spinning');
+            }, 500);
+            
+            showToast({
+                icon: '🔄',
+                title: '狀態已更新',
+                message: '系統狀態檢查完成',
+                duration: 2000
+            });
+        }
+        
+        // 啟動狀態監控
+        function startStatusMonitoring() {
+            // 立即獲取一次
+            fetchSystemStatus();
+            
+            // 定期刷新
+            statusRefreshTimer = setInterval(fetchSystemStatus, STATUS_REFRESH_INTERVAL);
+        }
+        
+        // 停止狀態監控
+        function stopStatusMonitoring() {
+            if (statusRefreshTimer) {
+                clearInterval(statusRefreshTimer);
+                statusRefreshTimer = null;
+            }
+        }
+        
+        // 頁面可見性變化時處理
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopStatusMonitoring();
+            } else {
+                startStatusMonitoring();
+                fetchSystemStatus(); // 立即刷新
+            }
+        });
+        
+        // 初始化時啟動狀態監控
+        startStatusMonitoring();
     </script>
 </body>
 </html>
