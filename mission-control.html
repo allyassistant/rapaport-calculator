@@ -823,6 +823,9 @@
                     <span class="header-subtitle">AI Assistant Dashboard</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;">
+                    <button id="refresh-btn" onclick="refreshData()" style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 20px; padding: 8px 16px; color: var(--text-secondary); font-size: 12px; font-weight: 500; cursor: pointer; backdrop-filter: blur(10px); transition: all 0.2s;">
+                        🔄 Refresh
+                    </button>
                     <button class="status-badge" id="system-status-badge" onclick="openHealthModal()" style="cursor: pointer; border: none; background: rgba(48, 209, 88, 0.15);">
                         <span class="status-dot"></span>
                         <span id="system-status-text">System Online</span>
@@ -1049,8 +1052,6 @@
         };
         
         let currentTab = 'dashboard';
-        let lastRealStatus = null;
-        let usingRealData = false;
         
         function switchTab(tab, event) {
             currentTab = tab;
@@ -1761,130 +1762,55 @@
             }
         }
         
-        // 頁面載入時自動刷新
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOMContentLoaded triggered');
-            
-            // 顯示刷新指示器
-            showRefreshIndicator();
-            
-            // 先渲染一次（確保有內容顯示）
-            render();
-            
-            // 執行自動刷新
-            setTimeout(() => {
-                autoRefreshData();
-            }, 500);
-        });
-        
-        // 自動刷新數據（開 App 時用）
-        function autoRefreshData() {
-            // 獲取真實狀態
-            fetchRealSystemStatus().then(() => {
-                render();
-                savePreferences();
-                
-                // 隱藏刷新指示器
-                hideRefreshIndicator();
-                
-                // 顯示成功 Toast（中性灰白 Liquid Glass）
-                const statusText = usingRealData ? '✅ 已連接真實系統' : '✅ 數據已更新 (Demo Mode)';
-                showToast(statusText);
-            }).catch(() => {
-                // 即使失敗都要渲染頁面
-                render();
-                savePreferences();
-                hideRefreshIndicator();
-                showToast('⚠️ 使用離線模式');
-            });
-        }
-        
-        // 刷新指示器（中性灰白 Liquid Glass）
-        function showRefreshIndicator() {
-            const indicator = document.createElement('div');
-            indicator.id = 'refresh-indicator';
-            indicator.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(255, 255, 255, 0.85);
-                backdrop-filter: blur(20px) saturate(180%);
-                -webkit-backdrop-filter: blur(20px) saturate(180%);
-                color: #1F2937;
-                padding: 20px 32px;
-                border-radius: 16px;
-                font-size: 15px;
-                font-weight: 500;
-                z-index: 9999;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-                border: 1px solid rgba(255, 255, 255, 0.6);
-            `;
-            indicator.innerHTML = `
-                <div style="width: 20px; height: 20px; border: 3px solid #E5E7EB; border-top-color: #1F2937; border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
-                <span>正在同步數據...</span>
-            `;
-            document.body.appendChild(indicator);
-        }
-        
-        function hideRefreshIndicator() {
-            const indicator = document.getElementById('refresh-indicator');
-            if (indicator) {
-                indicator.style.opacity = '0';
-                indicator.style.transition = 'opacity 0.3s';
-                setTimeout(() => indicator.remove(), 300);
-            }
-        }
-        
-        // Refresh 數據功能（手動）
+        // Refresh 數據功能
         function refreshData() {
-            showRefreshIndicator();
+            const btn = document.querySelector('[onclick="refreshData()"]') || document.getElementById('refresh-btn');
+            if (btn) {
+                btn.style.opacity = '0.5';
+                btn.textContent = '🔄 更新中...';
+            }
             
+            // 模擬更新（實際應用中呢度會 call API）
             setTimeout(() => {
                 updateHeaderStatus();
                 render();
                 savePreferences();
-                hideRefreshIndicator();
+                
+                if (btn) {
+                    btn.style.opacity = '1';
+                    btn.textContent = '🔄 Refresh';
+                }
+                
+                // 顯示更新成功提示
                 showToast('✓ 數據已更新');
             }, 800);
         }
         
-        // Toast 提示（中性灰白 Liquid Glass）
+        // Toast 提示
         function showToast(message) {
             const toast = document.createElement('div');
             toast.style.cssText = `
                 position: fixed;
-                top: 60px;
+                top: 20px;
                 left: 50%;
                 transform: translateX(-50%);
-                background: rgba(255, 255, 255, 0.9);
-                backdrop-filter: blur(20px) saturate(180%);
-                -webkit-backdrop-filter: blur(20px) saturate(180%);
-                color: #1F2937;
-                padding: 14px 28px;
-                border-radius: 16px;
-                font-size: 15px;
-                font-weight: 600;
+                background: rgba(48, 209, 88, 0.9);
+                backdrop-filter: blur(10px);
+                color: white;
+                padding: 12px 24px;
+                border-radius: 24px;
+                font-size: 14px;
+                font-weight: 500;
                 z-index: 9999;
-                animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.6);
-                max-width: 90%;
-                text-align: center;
+                animation: fadeIn 0.3s ease;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             `;
             toast.textContent = message;
             document.body.appendChild(toast);
             
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transform = 'translateX(-50%) translateY(-10px)';
-                toast.style.transition = 'all 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 2500);
-        }
+                toast.style.transition = 'opacity 0.3s';
                 setTimeout(() => toast.remove(), 300);
             }, 2000);
         }
@@ -1901,6 +1827,8 @@
         // ===== 實時系統狀態監控 =====
         const STATUS_API_URL = 'http://localhost:3456/api/status';
         const STATUS_REFRESH_INTERVAL = 30000; // 30秒
+        let lastRealStatus = null;
+        let usingRealData = false;
         
         // 獲取真實系統狀態
         async function fetchRealSystemStatus() {
