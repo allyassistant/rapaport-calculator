@@ -11,6 +11,7 @@ https://allyassistant.github.io/rapaport-calculator/
 - 支援 D-M 顏色同 FL-SI2 淨度
 - 自動計算 Discount
 - 即時顯示價格報價
+- **每週五自動更新** Rapaport 最新價格
 
 ## 使用方法
 1. 選擇 Shape (RBC = 圓鑽, Pear = 其他形狀)
@@ -19,5 +20,9 @@ https://allyassistant.github.io/rapaport-calculator/
 4. 輸入 Discount (預設 -30)
 5. 按 Calculate Price 計算
 
+## 自動化
+價格數據每週五 12:00 HKT 自動從 Rapaport API 更新。
+
 ## 版本
+- 2026-10-02: 更新價格數據 + 每週自動更新
 - 2026-01-30: 更新價格數據
